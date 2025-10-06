@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/main_screen.dart';
+import 'package:flutter_application_1/controllers/navigation_controller.dart';
+import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 
 class Chatdetail extends StatefulWidget {
@@ -41,7 +44,18 @@ class _ChatdetailState extends State<Chatdetail> {
       child: Row(
         children: [
           IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              // Get.find<NavigationController>().changeIndex(3);
+              // Navigator.pop(context);
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen()),
+                (route) => false,
+              );
+
+              Get.find<NavigationController>().changeIndex(3);
+            },
 
             icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           ),

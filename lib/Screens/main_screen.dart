@@ -27,8 +27,6 @@ class MainScreen extends StatelessWidget {
             index: navigationController.currentIndex.value,
             children: [
               Homescreen(),
-              // Testpage(),
-              // UpdateScreen(),
               UpdateScreen(),
               PostItemScreen(),
               ChatScreen(),

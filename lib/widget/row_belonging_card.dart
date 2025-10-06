@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
+import 'package:flutter_application_1/utils/app_textstyle.dart';
 
 class RowBelonginCard extends StatelessWidget {
-  //  final String bImages;
-  // final String bCategory;
-  // final String bDescription;
-  // final String bLocation;
-  // final String bTime;
-  // final double? bSize;
-
-  // const BelongingCard({
-  //   super.key,
-  //   required this.bImages,
-  //   required this.bCategory,
-  //   required this.bDescription,
-  //   required this.bLocation,
-  //   required this.bTime,
-  //   this.bSize,
-  // });
   final BelongingModel belonging;
   const RowBelonginCard({required this.belonging});
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'pending':
+        return Color(0xFF274C77).withOpacity(0.8);
+      case 'in progress':
+        return Color(0xFF6096BA).withOpacity(0.8);
+      case 'founded':
+      case 'discovered':
+      case 'found':
+        return Color(0xFFA3CEF1).withOpacity(0.8);
+      default:
+        return Colors.black26;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     print(
-      'Category: ${belonging.category}, Description: ${belonging.description}, Location: ${belonging.location}, Time: ${belonging.time}',
+      'Category: ${belonging.category}, Description: ${belonging.description}, Location: ${belonging.location}, Time: ${belonging.time}, Status: ${belonging.status}',
     );
     return Card(
-      color: Color(0xFFD9D9D9),
+      // color: Color(0xFFD9D9D9),
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -39,7 +39,8 @@ class RowBelonginCard extends StatelessWidget {
               child: Image.asset(
                 belonging.image,
                 width: 100,
-                height: 100,
+                // height: 120,
+                height: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
@@ -48,31 +49,60 @@ class RowBelonginCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Category + time
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Stack(
                     children: [
-                      Text(
-                        belonging.category,
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            belonging.category,
+                            style: AppTextStyle.h3.copyWith(
+                              color: Color(0xFF6096BA),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        belonging.time,
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          alignment: Alignment.topRight,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 3,
+                          ),
+                          decoration: BoxDecoration(
+                            // color: Color(0xFF6096BA).withOpacity(0.8),
+
+                            //color based on status
+                            color: _getStatusColor(belonging.status),
+
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            // 'Pending',
+                            // style: AppTextStyle.bodyMedium.copyWith(
+                            //   color: Colors.white,
+                            // ),
+                            belonging.status,
+                            style: AppTextStyle.bodyMedium.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 10),
+                  Text(belonging.time, style: AppTextStyle.bodySmall),
+
+                  const SizedBox(height: 5),
 
                   // Description
                   Text(
                     belonging.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 14),
+                    style: AppTextStyle.bodyLarge,
                   ),
                   const SizedBox(height: 6),
 
@@ -88,10 +118,7 @@ class RowBelonginCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           belonging.location,
-                          style: TextStyle(
-                            color: Colors.grey[700],
-                            fontSize: 13,
-                          ),
+                          style: AppTextStyle.bodySmall,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),

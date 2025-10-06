@@ -12,15 +12,12 @@ class PostItemScreen extends StatefulWidget {
 }
 
 class _PostItemScreenState extends State<PostItemScreen> {
-  // int _currentIndex = 2;
   String belongingType = "Lost";
-  File? _image; // store picked image
+  File? _image;
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(
-      source: ImageSource.gallery,
-    ); // gallery
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);

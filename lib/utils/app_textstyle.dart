@@ -7,6 +7,15 @@ class AppTextStyle {
     fontSize: 24,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle h2_2 = GoogleFonts.redHatDisplay(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle h2_3 = GoogleFonts.redHatDisplay(
+    fontSize: 18,
+    fontWeight: FontWeight.w900,
+  );
 
   static TextStyle h2 = GoogleFonts.redHatDisplay(
     fontSize: 16,

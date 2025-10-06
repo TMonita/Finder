@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/chatdetail.dart';
+import 'package:flutter_application_1/Screens/congrats_screen.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 
-class ConfirmMessageDialog extends StatelessWidget {
-  const ConfirmMessageDialog({super.key});
+class ConfirmReunitedDialog extends StatelessWidget {
+  const ConfirmReunitedDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +50,18 @@ class CartDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
 
           children: [
-            Image.asset('images/chat.png', width: 72),
+            Image.asset('images/found_belonging.png', width: 72),
             SizedBox(height: 24),
 
             Text(
-              'Now you can chat with finder directly to clarify your belonging',
+              'Have you found your belonging yet?',
               style: AppTextStyle.h3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24),
 
             Text(
-              'The belongings now is in progress of to reunion with the owner',
+              'Click confirm if you have found your belonging',
               style: AppTextStyle.bodySmall,
             ),
             SizedBox(height: 10),
@@ -74,7 +74,7 @@ class CartDialog extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Chatdetail()),
+                    MaterialPageRoute(builder: (context) => CongratsScreen()),
                   );
                   // Navigator.pop(context);
                   // Get.find<NavigationController>().changeIndex(3);

@@ -169,8 +169,16 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
               onPressed: () {
                 //   Navigator.pop(context);
                 //   Get.find<NavigationController>().changeIndex(3);
-                Get.find<NavigationController>().changeIndex(3);
-                Navigator.pop(context);
+
+                // Direct Navigate to chat page //
+                // Get.find<NavigationController>().changeIndex(3);
+                // Navigator.pop(context);
+
+                // Pop up Notification //
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmMessageDialog(),
+                );
               },
 
               icon: Icon(
@@ -187,27 +195,27 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            height: 55,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => ConfirmMessageDialog(),
-                );
-              },
-              // icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
-              label: Text(
-                'Test',
-                style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFE7ECEF),
-              ),
-            ),
-          ),
+          // SizedBox(height: 10),
+          // SizedBox(
+          //   width: double.infinity,
+          //   height: 55,
+          //   child: ElevatedButton.icon(
+          //     onPressed: () {
+          //       showDialog(
+          //         context: context,
+          //         builder: (context) => ConfirmMessageDialog(),
+          //       );
+          //     },
+          //     // icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
+          //     label: Text(
+          //       'Test',
+          //       style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
+          //     ),
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Color(0xFFE7ECEF),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/my_reports_detail.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/row_belonging_card.dart';
@@ -16,6 +17,8 @@ class _ProfilScreenState extends State<ProfilScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+
           children: [
             SizedBox(height: 20),
             buildProfile(),
@@ -29,18 +32,103 @@ class _ProfilScreenState extends State<ProfilScreen> {
   }
 
   Widget buildProfile() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Column(
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage('images/violet.jpg'),
+            ),
+            SizedBox(width: 20),
+            Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text("Tho Violet", style: AppTextStyle.h2_3),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.edit, size: 15),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 4),
+                Text("Phnom Penh", style: AppTextStyle.bodyLarge),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildBadges() {
+    return Container(
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage('images/violet.jpg'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Your Badges', style: AppTextStyle.h3),
               ),
-              SizedBox(width: 20),
-              Column(children: [Text("Tho Violet", style: AppTextStyle.h2)]),
+              Row(
+                children: [
+                  Text('View All', style: AppTextStyle.body2ndMedium),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.arrow_forward_ios_rounded, size: 10),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage('images/violet.jpg'),
+                  ),
+                  Text(
+                    'Community\nHelper',
+                    style: TextStyle(fontSize: 10),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage('images/violet.jpg'),
+                  ),
+                  Text(
+                    'Reunion\nHero',
+                    style: TextStyle(fontSize: 10),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage('images/violet.jpg'),
+                  ),
+                  Text(
+                    'Recovery\nChampion',
+                    style: TextStyle(fontSize: 10),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ],
           ),
         ],
@@ -48,61 +136,27 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
-  Widget buildBadges() {
+  Widget buildText() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Text('My Report', style: AppTextStyle.h3),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Your Badges', style: AppTextStyle.h3),
-                Text('View All'),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('images/violet.jpg'),
-                    ),
-                    Text(
-                      'Community\nHelper',
-                      style: TextStyle(fontSize: 10),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('images/violet.jpg'),
-                    ),
-                    Text(
-                      'Reunion\nHero',
-                      style: TextStyle(fontSize: 10),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage('images/violet.jpg'),
-                    ),
-                    Text(
-                      'Recovery\nChampion',
-                      style: TextStyle(fontSize: 10),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                Text('View All', style: AppTextStyle.body2ndMedium),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyReportsDetail(),
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.arrow_forward_ios_rounded, size: 10),
                 ),
               ],
             ),
@@ -112,60 +166,25 @@ class _ProfilScreenState extends State<ProfilScreen> {
     );
   }
 
-  // Widget buildMyReport() {
-  //   return Container(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(8.0),
-  //       child: Column(
-  //         children: [
-  //           PostItem(
-  //             bImages: 'images/charger.png',
-
-  //             bCategory: 'Electronic',
-  //             bDescription: 'I found this charger at school campus...',
-  //             bLocation: 'Limkokwing University',
-  //             bTime: '2 hours ago',
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget buildText() {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text('My Report'), Text('View All')],
-        ),
-      ),
-    );
-  }
-
   Widget buildMyReport() {
     return Container(
       // height: 800,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          // padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: (30 / 10),
-            // crossAxisSpacing: 12,
-            // mainAxisSpacing: 12,
-          ),
-          scrollDirection: Axis.vertical,
-          itemCount: belongingList.length,
-          itemBuilder: (context, index) {
-            BelongingModel belonging = belongingList[index];
-            return RowBelonginCard(belonging: belonging);
-          },
+      child: GridView.builder(
+        // padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
+          childAspectRatio: (25 / 10),
+          // crossAxisSpacing: 12,
+          // mainAxisSpacing: 12,
         ),
+        scrollDirection: Axis.vertical,
+        itemCount: belongingList.length,
+        itemBuilder: (context, index) {
+          BelongingModel belonging = belongingList[index];
+          return RowBelonginCard(belonging: belonging);
+        },
       ),
     );
   }

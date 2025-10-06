@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:flutter_application_1/widget/confirm_reunited_dialog.dart';
 
 class UpdateScreen extends StatefulWidget {
   const UpdateScreen({super.key});
@@ -29,7 +30,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
 
   Widget BodyContext() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           // Item Card
@@ -108,7 +109,6 @@ class _UpdateScreenState extends State<UpdateScreen> {
 
           const SizedBox(height: 30),
 
-          // Status Options
           RadioListTile<String>(
             value: "Awaiting for confirmation",
             groupValue: _status,
@@ -158,6 +158,14 @@ class _UpdateScreenState extends State<UpdateScreen> {
               setState(() {
                 _status = value!;
               });
+
+              if (value == "Item has been found/reunited") {
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmReunitedDialog(),
+                );
+              }
+              ;
             },
             activeColor: Colors.grey,
             title: Container(

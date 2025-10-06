@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/chatdetail.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 
-class ConfirmMessageDialog extends StatelessWidget {
-  const ConfirmMessageDialog({super.key});
+class ConfirmChatTogetherDialog extends StatelessWidget {
+  const ConfirmChatTogetherDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +49,18 @@ class CartDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
 
           children: [
-            Image.asset('images/chat.png', width: 72),
+            Image.asset('images/chat_two_people.png', width: 72),
             SizedBox(height: 24),
 
             Text(
-              'Now you can chat with finder directly to clarify your belonging',
+              'Are you in chat with finder?',
               style: AppTextStyle.h3,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24),
 
             Text(
-              'The belongings now is in progress of to reunion with the owner',
+              'Click confirm if you are in chat',
               style: AppTextStyle.bodySmall,
             ),
             SizedBox(height: 10),
@@ -71,13 +70,7 @@ class CartDialog extends StatelessWidget {
 
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Chatdetail()),
-                  );
-                  // Navigator.pop(context);
-                  // Get.find<NavigationController>().changeIndex(3);
+                  Navigator.of(context).pop();
                 },
                 child: Text(
                   'Confirm',

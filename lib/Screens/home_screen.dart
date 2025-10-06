@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/detail_notification.dart';
 import 'package:flutter_application_1/Screens/found_item_detail_screen.dart';
 import 'package:flutter_application_1/Screens/lost_item_detail_screen.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
@@ -79,10 +80,24 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ),
         const Spacer(),
-        const Icon(
-          Icons.notifications_none_rounded,
-          size: 25,
-          color: Color(0xFF274C77),
+
+        // const Icon(
+        //   Icons.notifications_none_rounded,
+        //   size: 25,
+        //   color: Color(0xFF274C77),
+        // ),
+        IconButton(
+          icon: Icon(
+            Icons.notifications_none_rounded,
+            size: 25,
+            color: Color(0xFF274C77),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailNotification()),
+            );
+          },
         ),
       ],
     );

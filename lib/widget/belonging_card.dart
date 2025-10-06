@@ -20,10 +20,25 @@ class BelongingCard extends StatefulWidget {
 }
 
 class _BelongingCardState extends State<BelongingCard> {
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'pending':
+        return Color(0xFF274C77).withOpacity(0.8);
+      case 'in progress':
+        return Color(0xFF6096BA).withOpacity(0.8);
+      case 'founded':
+      case 'discovered':
+      case 'found':
+        return Color(0xFFA3CEF1).withOpacity(0.8);
+      default:
+        return Colors.black26;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(
-      'Category: ${widget.belonging.category}, Description: ${widget.belonging.description}, Location: ${widget.belonging.location}, Time: ${widget.belonging.time}',
+      'Category: ${widget.belonging.category}, Description: ${widget.belonging.description}, Location: ${widget.belonging.location}, Time: ${widget.belonging.time}, Status: ${widget.belonging.status}',
     );
     return Container(
       width: MediaQuery.of(context).size.width / 2,
@@ -51,13 +66,20 @@ class _BelongingCardState extends State<BelongingCard> {
                 right: 8,
                 top: 8,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                    color: Color(0xFF6096BA).withOpacity(0.8),
+                    // color: Color(0xFF6096BA).withOpacity(0.8),
+
+                    //color based on status
+                    color: _getStatusColor(widget.belonging.status),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    'Pending',
+                    // 'Pending',
+                    // style: AppTextStyle.bodyMedium.copyWith(
+                    //   color: Colors.white,
+                    // ),
+                    widget.belonging.status,
                     style: AppTextStyle.bodyMedium.copyWith(
                       color: Colors.white,
                     ),
@@ -67,11 +89,6 @@ class _BelongingCardState extends State<BelongingCard> {
             ],
           ),
 
-          // Text('hey'),
-          // Text(widget.belonging.category),
-          // Text(widget.belonging.description),
-          // Text(widget.belonging.category),
-          // Text(widget.belonging.category),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Column(
