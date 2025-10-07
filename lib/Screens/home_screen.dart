@@ -17,6 +17,13 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   bool showFound = true;
   String? selectedCategory;
+  List<BelongingModel> filteredBelongingList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredBelongingList = belongingList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,34 +65,17 @@ class _HomescreenState extends State<Homescreen> {
           onTap: () => setState(() => showFound = true),
           child: Text(
             'Found',
-            // style: TextStyle(
-            //   fontSize: 24,
-            //   fontWeight: FontWeight.bold,
-            //   color: showFound ? const Color(0xFF274C77) : Colors.grey,
-            // ),
+
             style: AppTextStyle.headingWithColor(!showFound),
           ),
         ),
         const SizedBox(width: 20),
         GestureDetector(
           onTap: () => setState(() => showFound = false),
-          child: Text(
-            'Lost',
-            // style: TextStyle(
-            //   fontSize: 24,
-            //   fontWeight: FontWeight.bold,
-            //   color: !showFound ? const Color(0xFF274C77) : Colors.grey,
-            // ),
-            style: AppTextStyle.headingWithColor(showFound),
-          ),
+          child: Text('Lost', style: AppTextStyle.headingWithColor(showFound)),
         ),
         const Spacer(),
 
-        // const Icon(
-        //   Icons.notifications_none_rounded,
-        //   size: 25,
-        //   color: Color(0xFF274C77),
-        // ),
         IconButton(
           icon: Icon(
             Icons.notifications_none_rounded,
@@ -233,11 +223,11 @@ void _showFilterSheet(BuildContext context) {
               runSpacing: 10,
               children: [
                 _buildCategoryButton("Electronic"),
-                _buildCategoryButton("Jewellery"),
+                _buildCategoryButton("Jewelry"),
                 _buildCategoryButton("Document"),
                 _buildCategoryButton("Key"),
                 _buildCategoryButton("Bag"),
-                _buildCategoryButton("Pets"),
+                _buildCategoryButton("Pet"),
                 _buildCategoryButton("Person"),
               ],
             ),
@@ -266,12 +256,6 @@ void _showFilterSheet(BuildContext context) {
       );
     },
   );
-
-  // if (result != null) {
-  //   setState(() {
-  //     selectedCategory = result;
-  //   });
-  // }
 }
 
 Widget _buildCategoryButton(String title) {

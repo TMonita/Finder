@@ -25,7 +25,12 @@ class _UpdateScreenState extends State<UpdateScreen> {
   }
 
   Widget Appbar() {
-    return Center(child: Text('Item Status', style: AppTextStyle.h1));
+    return Center(
+      child: Text(
+        'Item Status',
+        style: AppTextStyle.h1.copyWith(color: const Color(0xFF274C77)),
+      ),
+    );
   }
 
   Widget BodyContext() {
@@ -35,6 +40,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
         children: [
           // Item Card
           Card(
+            color: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

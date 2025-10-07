@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/main_screen.dart';
 import 'package:flutter_application_1/controllers/navigation_controller.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/confirm_message_dialog.dart';
@@ -27,10 +26,11 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
         IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF274C77)),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainScreen()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => MainScreen()),
+            // );
+            Navigator.pop(context);
           },
         ),
         Expanded(
@@ -136,7 +136,7 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
 
   Widget buildBtn() {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min, // keeps buttons compact
         children: [
@@ -148,7 +148,7 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
               icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
               label: Text(
                 'Call',
-                style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
+                style: AppTextStyle.h2_2.copyWith(color: Color(0xFF274C77)),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFE7ECEF),
@@ -160,21 +160,7 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
             width: double.infinity,
             height: 55,
             child: ElevatedButton.icon(
-              // onPressed: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ChatScreen()),
-              //   );
-              // },
               onPressed: () {
-                //   Navigator.pop(context);
-                //   Get.find<NavigationController>().changeIndex(3);
-
-                // Direct Navigate to chat page //
-                // Get.find<NavigationController>().changeIndex(3);
-                // Navigator.pop(context);
-
-                // Pop up Notification //
                 showDialog(
                   context: context,
                   builder: (context) => ConfirmMessageDialog(),
@@ -188,34 +174,13 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
               ),
               label: Text(
                 'Message in the app',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: AppTextStyle.h2_2.copyWith(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF274C77),
               ),
             ),
           ),
-          // SizedBox(height: 10),
-          // SizedBox(
-          //   width: double.infinity,
-          //   height: 55,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {
-          //       showDialog(
-          //         context: context,
-          //         builder: (context) => ConfirmMessageDialog(),
-          //       );
-          //     },
-          //     // icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
-          //     label: Text(
-          //       'Test',
-          //       style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
-          //     ),
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: Color(0xFFE7ECEF),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

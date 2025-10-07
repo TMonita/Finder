@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/home_screen.dart';
+import 'package:flutter_application_1/Screens/main_screen.dart';
 import 'package:flutter_application_1/login_signup_page.dart/loginpage.dart';
 
 class SignupPage extends StatefulWidget {
@@ -101,7 +101,7 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Homescreen()),
+                        MaterialPageRoute(builder: (context) => MainScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

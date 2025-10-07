@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/chat_screen.dart';
-import 'package:flutter_application_1/Screens/main_screen.dart';
-import 'package:flutter_application_1/Screens/profile_screen.dart';
+import 'package:flutter_application_1/controllers/navigation_controller.dart';
+import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:flutter_application_1/widget/confirm_message_dialog.dart';
+import 'package:get/instance_manager.dart';
 
 class LostItemDetailpage extends StatefulWidget {
   const LostItemDetailpage({super.key});
@@ -23,19 +24,21 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
     return Row(
       children: [
         IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF274C77)),
+          // onPressed: () {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => MainScreen()),
+          //   );},
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainScreen()),
-            );
+            Navigator.pop(context);
           },
         ),
-        const Expanded(
+        Expanded(
           child: Center(
             child: Text(
               'Lost Item',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: AppTextStyle.h1.copyWith(color: Color(0xFF274C77)),
             ),
           ),
         ),
@@ -72,44 +75,56 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
               children: [
                 Text(
                   "Electronic",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: AppTextStyle.body2ndLarge.copyWith(
+                    color: Color(0xFF6096BA),
+                  ),
                 ),
+                SizedBox(height: 10),
+
                 Text(
                   "I found this charger at school campus and now it still here with me",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  style: AppTextStyle.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(Icons.watch_later_outlined, size: 12),
-                    SizedBox(width: 4),
-                    Text(
-                      '2 hours ago',
-                      style: TextStyle(fontSize: 10, color: Colors.black87),
+                    Opacity(
+                      opacity: 0.8,
+                      child: Icon(Icons.watch_later_outlined, size: 12),
                     ),
+                    SizedBox(width: 4),
+                    Text('2 hours ago', style: AppTextStyle.bodySmall),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(Icons.pin_drop_outlined, size: 12),
+                    Opacity(
+                      opacity: 0.8,
+                      child: Icon(Icons.pin_drop_outlined, size: 12),
+                    ),
                     SizedBox(width: 4),
                     Text(
                       'Limkokwing University',
-                      style: TextStyle(fontSize: 10, color: Colors.black87),
+                      style: AppTextStyle.bodySmall,
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfilScreen()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => ProfilScreen()),
+                    // );
+                    // Get.find<NavigationController>().currentIndex.value = 4;
+                    Get.find<NavigationController>().changeIndex(4);
+                    Navigator.pop(context);
                   },
+
                   child: Text(
                     'Add post by Tho Violet',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: AppTextStyle.bodyLarge.copyWith(color: Colors.black),
                   ),
                 ),
               ],
@@ -122,7 +137,7 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
 
   Widget buildBtn() {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.min, // keeps buttons compact
         children: [
@@ -134,7 +149,7 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
               icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
               label: Text(
                 'Call',
-                style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
+                style: AppTextStyle.h2_2.copyWith(color: Color(0xFF274C77)),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFE7ECEF),
@@ -146,12 +161,27 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
             width: double.infinity,
             height: 55,
             child: ElevatedButton.icon(
+              // onPressed: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => ChatScreen()),
+              //   );
+              // },
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                //   Navigator.pop(context);
+                //   Get.find<NavigationController>().changeIndex(3);
+
+                // Direct Navigate to chat page //
+                // Get.find<NavigationController>().changeIndex(3);
+                // Navigator.pop(context);
+
+                // Pop up Notification //
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmMessageDialog(),
                 );
               },
+
               icon: Icon(
                 Icons.messenger_outline_rounded,
                 size: 30,
@@ -159,13 +189,34 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
               ),
               label: Text(
                 'Message in the app',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: AppTextStyle.h2_2.copyWith(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF274C77),
               ),
             ),
           ),
+          // SizedBox(height: 10),
+          // SizedBox(
+          //   width: double.infinity,
+          //   height: 55,
+          //   child: ElevatedButton.icon(
+          //     onPressed: () {
+          //       showDialog(
+          //         context: context,
+          //         builder: (context) => ConfirmMessageDialog(),
+          //       );
+          //     },
+          //     // icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
+          //     label: Text(
+          //       'Test',
+          //       style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
+          //     ),
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Color(0xFFE7ECEF),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -25,8 +25,8 @@ class RowBelonginCard extends StatelessWidget {
     print(
       'Category: ${belonging.category}, Description: ${belonging.description}, Location: ${belonging.location}, Time: ${belonging.time}, Status: ${belonging.status}',
     );
+
     return Card(
-      // color: Color(0xFFD9D9D9),
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -39,7 +39,6 @@ class RowBelonginCard extends StatelessWidget {
               child: Image.asset(
                 belonging.image,
                 width: 100,
-                // height: 120,
                 height: double.infinity,
                 fit: BoxFit.cover,
               ),
@@ -68,21 +67,15 @@ class RowBelonginCard extends StatelessWidget {
                           alignment: Alignment.topRight,
                           padding: EdgeInsets.symmetric(
                             horizontal: 10,
-                            vertical: 3,
+                            vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            // color: Color(0xFF6096BA).withOpacity(0.8),
-
                             //color based on status
                             color: _getStatusColor(belonging.status),
 
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            // 'Pending',
-                            // style: AppTextStyle.bodyMedium.copyWith(
-                            //   color: Colors.white,
-                            // ),
                             belonging.status,
                             style: AppTextStyle.bodyMedium.copyWith(
                               color: Colors.white,

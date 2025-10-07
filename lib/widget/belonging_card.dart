@@ -2,15 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 
-// class BelongingCard extends StatelessWidget {
-//   final BelongingModel belonging;
-//   const BelongingCard({super.key, required this.belonging});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(height: 100, child: Card(child: Text(belonging.category)));
-//   }
-// }
 class BelongingCard extends StatefulWidget {
   final BelongingModel belonging;
   const BelongingCard({super.key, required this.belonging});
@@ -42,17 +33,10 @@ class _BelongingCardState extends State<BelongingCard> {
     );
     return Container(
       width: MediaQuery.of(context).size.width / 2,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        // color: Colors.grey,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: [
           Stack(
-            // height: 220,
-            // // width: 180,
-            // width: double.infinity,
-            // child:
             children: [
               ClipRRect(
                 borderRadius: BorderRadiusDirectional.circular(10.0),
@@ -68,17 +52,10 @@ class _BelongingCardState extends State<BelongingCard> {
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                    // color: Color(0xFF6096BA).withOpacity(0.8),
-
-                    //color based on status
                     color: _getStatusColor(widget.belonging.status),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    // 'Pending',
-                    // style: AppTextStyle.bodyMedium.copyWith(
-                    //   color: Colors.white,
-                    // ),
                     widget.belonging.status,
                     style: AppTextStyle.bodyMedium.copyWith(
                       color: Colors.white,
@@ -108,7 +85,7 @@ class _BelongingCardState extends State<BelongingCard> {
                 ),
                 Text(
                   widget.belonging.description,
-                  style: AppTextStyle.body2ndMedium,
+                  style: AppTextStyle.bodyMedium,
                 ),
 
                 Opacity(

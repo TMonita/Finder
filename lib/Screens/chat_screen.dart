@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/chatdetail.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
-import 'package:flutter_application_1/widget/confirm_chat_tgt_dialog.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -32,26 +31,15 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   Future.delayed(Duration(seconds: 2), () {
-  //     if (mounted) {
-  //       showDialog(
-  //         context: context,
-  //         builder: (context) => ConfirmChatTogetherDialog(),
-  //       );
-  //     }
-  //   });
-  // }
-
   Widget buildAppbar() {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Chats', style: AppTextStyle.h1),
+          Text(
+            'Chats',
+            style: AppTextStyle.h1.copyWith(color: Color(0xFF274C77)),
+          ),
           Icon(Icons.search_rounded, size: 30, color: Color(0xFF274C77)),
         ],
       ),

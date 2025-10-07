@@ -1,225 +1,262 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/main_screen.dart';
+import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ItemCardScreen extends StatelessWidget {
-  const ItemCardScreen({super.key});
+class PostItemScreen extends StatefulWidget {
+  const PostItemScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // 👇 Example data (you can replace with your actual data)
-    final items = [
-      {
-        "image": "images/charger.png",
-        "status": "Pending",
-        "category": "Electronic",
-        "description": "I found this charger at school campus...",
-        "location": "Limkokwing University",
-        "time": "2 hours ago",
-      },
-      {
-        "image": "images/charger2.jpg",
-        "status": "In Progress",
-        "category": "Electronic",
-        "description": "I found this charger at school campus...",
-        "location": "Limkokwing University",
-        "time": "2 hours ago",
-      },
-      {
-        "image": "images/charger3.jpg",
-        "status": "Discovered",
-        "category": "Electronic",
-        "description": "I found this charger at school campus...",
-        "location": "Limkokwing University",
-        "time": "2 hours ago",
-      },
-      {
-        "image": "images/charger4.jpg",
-        "status": "Pending",
-        "category": "Electronic",
-        "description": "I found this charger at the library...",
-        "location": "Limkokwing University",
-        "time": "4 hours ago",
-      },
-    ];
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Item Status",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: GridView.builder(
-          itemCount: items.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 0.75,
-          ),
-          itemBuilder: (context, index) {
-            final item = items[index];
-            return ItemCard(
-              image: item["image"]!,
-              status: item["status"]!,
-              category: item["category"]!,
-              description: item["description"]!,
-              location: item["location"]!,
-              time: item["time"]!,
-            );
-          },
-        ),
-      ),
-    );
-  }
+  State<PostItemScreen> createState() => _PostItemScreenState();
 }
 
-class ItemCard extends StatelessWidget {
-  final String image;
-  final String status;
-  final String category;
-  final String description;
-  final String location;
-  final String time;
+class _PostItemScreenState extends State<PostItemScreen> {
+  String belongingType = "Lost";
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
-  const ItemCard({
-    super.key,
-    required this.image,
-    required this.status,
-    required this.category,
-    required this.description,
-    required this.location,
-    required this.time,
-  });
-
-  Color getStatusColor() {
-    switch (status.toLowerCase()) {
-      case "pending":
-        return const Color(0xFF5A84A8);
-      case "in progress":
-        return const Color(0xFF4BA3E3);
-      case "discovered":
-        return const Color(0xFF9EC9E3);
-      default:
-        return Colors.grey;
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color badgeColor = getStatusColor();
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9F9FB),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          children: [
+            buildHeader(context),
+            const SizedBox(height: 24),
+            buildCategoryDropdown(),
+            const SizedBox(height: 20),
+            buildPostTypeSelector(),
+            const SizedBox(height: 20),
+            buildTextField("Title", "A title needs at least 50 characters"),
+            buildTextField(
+              "Description",
+              "Describe important information like color, feature, etc.",
+              maxLines: 3,
+            ),
+            buildTextField("Location", "Where the item was found"),
+            const SizedBox(height: 20),
+            buildImagePicker(),
+            const SizedBox(height: 30),
+            buildContinueButton(context),
+          ],
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image + Status label
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-                child: Image.asset(
-                  image,
-                  height: 140,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    status,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
+    );
+  }
 
-          // Details section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      category,
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      time,
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                  ],
+  Widget buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
+          onPressed: () => Navigator.pop(context),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          "Create Ad",
+          style: AppTextStyle.h1.copyWith(
+            fontSize: 26,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildCategoryDropdown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Category", style: AppTextStyle.h2),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade300),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              hint: const Text("Select a category"),
+              value: null,
+              onChanged: (value) {},
+              items: const [
+                DropdownMenuItem(
+                  value: "Electronics",
+                  child: Text("Electronics"),
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.black87, fontSize: 13),
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    const Icon(Icons.location_on, color: Colors.grey, size: 16),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        location,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                DropdownMenuItem(value: "Jewelry", child: Text("Jewelry")),
+                DropdownMenuItem(value: "Document", child: Text("Document")),
+                DropdownMenuItem(value: "Key", child: Text("Key")),
+                DropdownMenuItem(value: "Bag", child: Text("Bag")),
+                DropdownMenuItem(value: "Pet", child: Text("Pet")),
+                DropdownMenuItem(value: "Person", child: Text("Person")),
               ],
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPostTypeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Post Type", style: AppTextStyle.h2),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            buildPostTypeButton("Lost", const Color(0xFFC8B6FF)),
+            const SizedBox(width: 12),
+            buildPostTypeButton("Found", const Color(0xFFFFE066)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildPostTypeButton(String type, Color color) {
+    final bool isSelected = belongingType == type;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => belongingType = type),
+        child: Container(
+          height: 45,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? color : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected ? Colors.transparent : Colors.grey.shade300,
+            ),
+            boxShadow: [
+              if (isSelected)
+                BoxShadow(
+                  color: color.withOpacity(0.4),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+            ],
+          ),
+          child: Text(
+            type,
+            style: AppTextStyle.bodyLarge.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(String label, String hint, {int maxLines = 1}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: AppTextStyle.h2),
+          const SizedBox(height: 8),
+          TextField(
+            maxLines: maxLines,
+            decoration: InputDecoration(
+              hintText: hint,
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF274C77)),
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget buildImagePicker() {
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child:
+            _image == null
+                ? const Center(
+                  child: Icon(
+                    Icons.image_outlined,
+                    size: 50,
+                    color: Colors.grey,
+                  ),
+                )
+                : ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+      ),
+    );
+  }
+
+  Widget buildContinueButton(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFFFD54F),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          'Continue',
+          style: AppTextStyle.h2_2.copyWith(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }

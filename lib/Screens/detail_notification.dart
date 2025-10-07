@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/found_item_detail_screen.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:flutter_application_1/widget/confirm_message_dialog.dart';
 
 class DetailNotification extends StatefulWidget {
   const DetailNotification({super.key});
@@ -10,32 +10,10 @@ class DetailNotification extends StatefulWidget {
   State<DetailNotification> createState() => _DetailNotificationState();
 }
 
-class _DetailNotificationState extends State<DetailNotification>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
+class _DetailNotificationState extends State<DetailNotification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Notification"),
-      //   bottom: TabBar(
-      //     controller: _tabController,
-      //     isScrollable: true,
-      //     tabs: const [
-      //       Tab(text: "All"),
-      //       Tab(text: "Lost Items"),
-      //       Tab(text: "Found Items"),
-      //       Tab(text: "Status Updates"),
-      //     ],
-      //   ),
-      // ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -54,135 +32,219 @@ class _DetailNotificationState extends State<DetailNotification>
             Navigator.pop(context);
           },
         ),
-
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: const [
-            Tab(text: "All"),
-            Tab(text: "Lost Items"),
-            Tab(text: "Found Items"),
-            Tab(text: "Status Updates"),
-          ],
-          labelStyle: AppTextStyle.bodyLarge,
-        ),
       ),
-
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          buildAllTab(),
-          Center(child: Text("Lost Items here", style: AppTextStyle.h2)),
-          Center(child: Text("Found Items here")),
-          Center(child: Text("Status Updates here")),
-        ],
-      ),
-    );
-  }
-
-  Widget buildAllTab() {
-    return ListView(
-      padding: const EdgeInsets.all(12),
-
-      children: [
-        _buildCard(
-          icon: Icons.account_balance_wallet,
-          title: "Wallet Found",
-          status: "Status",
-          statusColor: Colors.green,
-          subtitle: "Location: Building A, Floor 2\nTime: 2 hours ago",
-          actions: [
-            _buildActionButton("View Details"),
-            _buildActionButton("Mark Claimed"),
-          ],
-        ),
-        const SizedBox(height: 12),
-        _buildCard(
-          icon: Icons.smartphone,
-          title: "Phone Lost",
-          status: "Pending",
-          statusColor: Colors.orange,
-          subtitle: "Last seen: Cafeteria\nTime: 1 day ago",
-          actions: [_buildActionButton("View Details")],
-        ),
-        const SizedBox(height: 12),
-        _buildCard(
-          icon: Icons.access_time,
-          title: "Reminder",
-          subtitle:
-              "You reported a lost item 7 days ago.\nCheck if it has been found.",
-          actions: [_buildActionButton("Check Items")],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCard({
-    required IconData icon,
-    required String title,
-    String? status,
-    Color? statusColor,
-    required String subtitle,
-    required List<Widget> actions,
-  }) {
-    return Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: SafeArea(
+        child: ListView(
           children: [
-            Row(
-              children: [
-                Icon(icon, size: 32),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      if (status != null)
-                        Text(
-                          status,
-                          style: TextStyle(
-                            color: statusColor ?? Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Text(subtitle, style: const TextStyle(fontSize: 14)),
-            const SizedBox(height: 8),
-            Row(
-              children:
-                  actions
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: e,
-                        ),
-                      )
-                      .toList(),
-            ),
+            buildOwnertoFinderNotification(),
+            buildFindertoOwnerNotification(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildActionButton(String text) {
-    return OutlinedButton(onPressed: () {}, child: Text(text));
+  Widget buildOwnertoFinderNotification() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      "Someone wants to chat with you to reunite their lost belongings!",
+                      style: AppTextStyle.h4,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 45),
+              //   child: Row(
+              //     children: [
+              //       CircleAvatar(
+              //         radius: 20,
+              //         backgroundImage: AssetImage('images/violet.jpg'),
+              //       ),
+              //       SizedBox(width: 5),
+              //       Row(children: [Text("Tho Violet", style: AppTextStyle.h2)]),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ItemDetailpage()),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset('images/charger.png', height: 220),
+                ),
+              ),
+              Text(
+                'I found this charger at school campus...',
+                style: AppTextStyle.bodyLarge,
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      shadowColor: Colors.black,
+                      elevation: 4,
+                      side: const BorderSide(color: Colors.black, width: 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Cancel"),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF274C77),
+                      foregroundColor: Colors.white,
+                      shadowColor: Colors.black,
+                      elevation: 6,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmMessageDialog(),
+                      );
+                    },
+                    child: const Text("Approve"),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildFindertoOwnerNotification() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  // Image.asset('images/electronic.png', height: 30),
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      "You received a message from a finder.",
+                      style: AppTextStyle.h4,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 5),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ItemDetailpage()),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset('images/charger.png', height: 220),
+                ),
+              ),
+              Text(
+                'I found this charger at school campus...',
+                style: AppTextStyle.bodyLarge,
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      shadowColor: Colors.black,
+                      elevation: 4,
+                      side: const BorderSide(color: Colors.black, width: 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Cancel"),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF274C77),
+                      foregroundColor: Colors.white,
+                      shadowColor: Colors.black,
+                      elevation: 6,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmMessageDialog(),
+                      );
+                    },
+                    child: const Text("Approve"),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
-import 'package:flutter_application_1/widget/row_belonging_card.dart';
+import 'package:flutter_application_1/widget/all_reports_belonging.dart';
 
 class MyReportsDetail extends StatefulWidget {
   const MyReportsDetail({super.key});
@@ -44,6 +44,9 @@ class _MyReportsDetailState extends State<MyReportsDetail>
         bottom: TabBar(
           controller: _reportTabController,
           isScrollable: true,
+          labelColor: Color(0xFF274C77),
+          unselectedLabelColor: Colors.black,
+          indicatorColor: Color(0xFF274C77),
           tabs: const [
             Tab(text: "All"),
             Tab(text: "Pending"),
@@ -53,161 +56,74 @@ class _MyReportsDetailState extends State<MyReportsDetail>
           labelStyle: AppTextStyle.bodyLarge,
         ),
       ),
-
-      // body: SafeArea(child: buildbody()),
       body: TabBarView(
         controller: _reportTabController,
         children: [
-          ListView(children: [builAllTap()]),
-          Center(
-            child: Text(
-              "Pending here",
-              style: AppTextStyle.h2_2.copyWith(color: Colors.black45),
-            ),
+          ListView(children: [buildTab(belongingList)]),
+          ListView(
+            children: [
+              buildTab(
+                belongingList
+                    .where(
+                      (item) => item.status.toLowerCase().trim() == 'pending',
+                    )
+                    .toList(),
+              ),
+            ],
           ),
-          Center(
-            child: Text(
-              "In Progress here",
-              style: AppTextStyle.h2_2.copyWith(color: Colors.black45),
-            ),
+          ListView(
+            children: [
+              buildTab(
+                belongingList
+                    .where(
+                      (item) =>
+                          item.status.toLowerCase().trim() == 'in progress',
+                    )
+                    .toList(),
+              ),
+            ],
           ),
-          Center(
-            child: Text(
-              "Items Founded here",
-              style: AppTextStyle.h2_2.copyWith(color: Colors.black45),
-            ),
+          ListView(
+            children: [
+              buildTab(
+                belongingList
+                    .where(
+                      (item) =>
+                          item.status.toLowerCase().trim() == 'founded' ||
+                          item.status.toLowerCase().trim() == 'found' ||
+                          item.status.toLowerCase().trim() == 'discovered',
+                    )
+                    .toList(),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  // Widget buildAllTab() {
-  //   return ListView(
-  //     padding: const EdgeInsets.all(12),
-
-  //     children: [
-  //       _buildCard(
-  //         icon: Icons.account_balance_wallet,
-  //         title: "Wallet Found",
-  //         status: "Status",
-  //         statusColor: Colors.green,
-  //         subtitle: "Location: Building A, Floor 2\nTime: 2 hours ago",
-  //         actions: [
-  //           _buildActionButton("View Details"),
-  //           _buildActionButton("Mark Claimed"),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 12),
-  //       _buildCard(
-  //         icon: Icons.smartphone,
-  //         title: "Phone Lost",
-  //         status: "Pending",
-  //         statusColor: Colors.orange,
-  //         subtitle: "Last seen: Cafeteria\nTime: 1 day ago",
-  //         actions: [_buildActionButton("View Details")],
-  //       ),
-  //       const SizedBox(height: 12),
-  //       _buildCard(
-  //         icon: Icons.access_time,
-  //         title: "Reminder",
-  //         subtitle:
-  //             "You reported a lost item 7 days ago.\nCheck if it has been found.",
-  //         actions: [_buildActionButton("Check Items")],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget _buildCard({
-  //   required IconData icon,
-  //   required String title,
-  //   String? status,
-  //   Color? statusColor,
-  //   required String subtitle,
-  //   required List<Widget> actions,
-  // }) {
-  //   return Card(
-  //     color: Colors.white,
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-  //     elevation: 2,
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(12),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Row(
-  //             children: [
-  //               Icon(icon, size: 32),
-  //               const SizedBox(width: 10),
-  //               Expanded(
-  //                 child: Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     Text(
-  //                       title,
-  //                       style: const TextStyle(
-  //                         fontSize: 16,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                     if (status != null)
-  //                       Text(
-  //                         status,
-  //                         style: TextStyle(
-  //                           color: statusColor ?? Colors.black,
-  //                           fontWeight: FontWeight.w500,
-  //                         ),
-  //                       ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //           const SizedBox(height: 8),
-  //           Text(subtitle, style: const TextStyle(fontSize: 14)),
-  //           const SizedBox(height: 8),
-  //           Row(
-  //             children:
-  //                 actions
-  //                     .map(
-  //                       (e) => Padding(
-  //                         padding: const EdgeInsets.only(right: 8),
-  //                         child: e,
-  //                       ),
-  //                     )
-  //                     .toList(),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget builAllTap() {
-    return Container(
-      // height: 800,
-      child: GridView.builder(
-        // padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: (25 / 10),
-          // crossAxisSpacing: 12,
-          // mainAxisSpacing: 12,
+  Widget buildTab(List<BelongingModel> items) {
+    return Column(
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            childAspectRatio: (25 / 13),
+          ),
+          scrollDirection: Axis.vertical,
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            BelongingModel belonging = items[index];
+            return AllReportBelonginCard(belonging: belonging);
+          },
         ),
-        scrollDirection: Axis.vertical,
-        itemCount: belongingList.length,
-        itemBuilder: (context, index) {
-          BelongingModel belonging = belongingList[index];
-          return RowBelonginCard(belonging: belonging);
-        },
-      ),
+      ],
     );
   }
 
-  Widget _buildActionButton(String text) {
-    return OutlinedButton(onPressed: () {}, child: Text(text));
-  }
+  // Widget _buildActionButton(String text) {
+  //   return OutlinedButton(onPressed: () {}, child: Text(text));
+  // }
 }

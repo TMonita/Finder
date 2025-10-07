@@ -18,7 +18,7 @@ class BelongingModel {
 
 final List<BelongingModel> belongingList = [
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -34,7 +34,7 @@ final List<BelongingModel> belongingList = [
     status: "In Progress",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -42,7 +42,7 @@ final List<BelongingModel> belongingList = [
     status: "Founded",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -50,7 +50,7 @@ final List<BelongingModel> belongingList = [
     status: "Pending",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -58,7 +58,7 @@ final List<BelongingModel> belongingList = [
     status: "Pending",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -66,7 +66,7 @@ final List<BelongingModel> belongingList = [
     status: "In progress",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",
@@ -74,7 +74,7 @@ final List<BelongingModel> belongingList = [
     status: "Pending",
   ),
   BelongingModel(
-    category: "Electronics",
+    category: "Electronic",
     description: "I found this charger at school campus...",
     location: "Limkokwing",
     time: "2hours ago",

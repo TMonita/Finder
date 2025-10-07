@@ -77,7 +77,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
               ),
               Row(
                 children: [
-                  Text('View All', style: AppTextStyle.body2ndMedium),
+                  Text('View All', style: AppTextStyle.bodyMedium),
                   IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.arrow_forward_ios_rounded, size: 10),
@@ -146,7 +146,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
             Text('My Report', style: AppTextStyle.h3),
             Row(
               children: [
-                Text('View All', style: AppTextStyle.body2ndMedium),
+                Text('View All', style: AppTextStyle.bodyMedium),
                 IconButton(
                   onPressed: () {
                     Navigator.push(
