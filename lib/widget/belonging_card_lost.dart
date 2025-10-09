@@ -87,7 +87,7 @@ class _BelongingCardState extends State<BelongingCardLostPage> {
 
                 Text(
                   widget.belonging.description,
-                  style: AppTextStyle.body2ndLarge,
+                  style: AppTextStyle.bodyLarge,
                 ),
 
                 Opacity(

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/edit_profile_screen.dart';
 import 'package:flutter_application_1/Screens/my_reports_detail.dart';
+import 'package:flutter_application_1/Screens/view_all_badges.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/row_belonging_card.dart';
@@ -12,6 +16,10 @@ class ProfilScreen extends StatefulWidget {
 }
 
 class _ProfilScreenState extends State<ProfilScreen> {
+  String _username = "Tho Violet";
+  String _address = "Phnom Penh";
+  String? _imagePath;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +46,10 @@ class _ProfilScreenState extends State<ProfilScreen> {
           children: [
             CircleAvatar(
               radius: 30,
-              backgroundImage: AssetImage('images/violet.jpg'),
+              backgroundImage:
+                  _imagePath != null
+                      ? FileImage(File(_imagePath!))
+                      : AssetImage('images/violet.jpg') as ImageProvider,
             ),
             SizedBox(width: 20),
             Column(
@@ -47,15 +58,37 @@ class _ProfilScreenState extends State<ProfilScreen> {
               children: [
                 Row(
                   children: [
-                    Text("Tho Violet", style: AppTextStyle.h2_3),
+                    Text(_username, style: AppTextStyle.h2_3),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
+                          ),
+                        );
+                        if (result != null && result is Map<String, dynamic>) {
+                          setState(() {
+                            if (result['imagePath'] != null) {
+                              _imagePath = result['imagePath'];
+                            }
+                            _username = result['username'] ?? _username;
+                            _address = result['address'] ?? _address;
+                          });
+                        }
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => EditProfileScreen(),
+                        //   ),
+                        // );
+                      },
+
                       icon: Icon(Icons.edit, size: 15),
                     ),
                   ],
                 ),
-                SizedBox(height: 4),
-                Text("Phnom Penh", style: AppTextStyle.bodyLarge),
+                Text(_address, style: AppTextStyle.bodyLarge),
               ],
             ),
           ],
@@ -79,7 +112,14 @@ class _ProfilScreenState extends State<ProfilScreen> {
                 children: [
                   Text('View All', style: AppTextStyle.bodyMedium),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewAllBadges(),
+                        ),
+                      );
+                    },
                     icon: Icon(Icons.arrow_forward_ios_rounded, size: 10),
                   ),
                 ],
@@ -92,39 +132,63 @@ class _ProfilScreenState extends State<ProfilScreen> {
             children: [
               Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage('images/violet.jpg'),
+                  // CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: AssetImage('images/violet.jpg'),
+                  // ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        child: Image.asset('images/Medallions.png'),
+                      ),
+                    ],
                   ),
                   Text(
                     'Community\nHelper',
-                    style: TextStyle(fontSize: 10),
+                    style: AppTextStyle.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage('images/violet.jpg'),
+                  // CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: AssetImage('images/violet.jpg'),
+                  // ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        child: Image.asset('images/Medallions.png'),
+                      ),
+                    ],
                   ),
                   Text(
                     'Reunion\nHero',
-                    style: TextStyle(fontSize: 10),
+                    style: AppTextStyle.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
               Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage('images/violet.jpg'),
+                  // CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: AssetImage('images/violet.jpg'),
+                  // ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        child: Image.asset('images/Medallions.png'),
+                      ),
+                    ],
                   ),
                   Text(
                     'Recovery\nChampion',
-                    style: TextStyle(fontSize: 10),
+                    style: AppTextStyle.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -183,7 +247,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
         itemCount: belongingList.length,
         itemBuilder: (context, index) {
           BelongingModel belonging = belongingList[index];
-          return RowBelonginCard(belonging: belonging);
+          return RowBelongingCard(belonging: belonging);
         },
       ),
     );

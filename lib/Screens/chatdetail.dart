@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/main_screen.dart';
 import 'package:flutter_application_1/controllers/navigation_controller.dart';
+import 'package:flutter_application_1/utils/app_colortheme.dart';
+import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 
@@ -66,11 +68,14 @@ class _ChatdetailState extends State<Chatdetail> {
           const SizedBox(width: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text('Tho Violet'),
+            children: [
+              Text('Tho Violet', style: AppTextStyle.h3),
               Text(
                 'Online',
-                style: TextStyle(color: Colors.blue, fontSize: 10),
+                style: AppTextStyle.bodySmall.copyWith(
+                  color: AppColors.secondary,
+                  fontSize: 10,
+                ),
               ),
             ],
           ),
@@ -108,13 +113,13 @@ class _ChatdetailState extends State<Chatdetail> {
                       controller: _controller,
                       decoration: InputDecoration(
                         hintText: "Type here...",
-                        hintStyle: TextStyle(color: Colors.grey[500]),
+                        hintStyle: AppTextStyle.hintText,
                         border: InputBorder.none,
                       ),
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.send, color: Colors.blue),
+                    icon: const Icon(Icons.send, color: AppColors.secondary),
                     onPressed: () {
                       if (_controller.text.trim().isNotEmpty) {
                         setState(() {
@@ -152,13 +157,10 @@ class _ChatdetailState extends State<Chatdetail> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(text, style: const TextStyle(fontSize: 15)),
+            Text(text, style: AppTextStyle.bodyLarge),
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                time,
-                style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-              ),
+              child: Text(time, style: AppTextStyle.bodySmall),
             ),
           ],
         ),
@@ -175,19 +177,16 @@ class _ChatdetailState extends State<Chatdetail> {
         padding: const EdgeInsets.all(12),
         constraints: const BoxConstraints(maxWidth: 280),
         decoration: BoxDecoration(
-          color: Colors.blue[100],
+          color: AppColors.tertiary,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(text, style: const TextStyle(fontSize: 15)),
+            Text(text, style: AppTextStyle.bodyLarge),
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                time,
-                style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-              ),
+              child: Text(time, style: AppTextStyle.bodySmall),
             ),
           ],
         ),

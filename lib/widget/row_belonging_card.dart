@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 
-class RowBelonginCard extends StatelessWidget {
+class RowBelongingCard extends StatelessWidget {
   final BelongingModel belonging;
-  const RowBelonginCard({required this.belonging});
+  const RowBelongingCard({required this.belonging});
   Color _getStatusColor(String status) {
     switch (status.toLowerCase().trim()) {
       case 'pending':
@@ -67,7 +67,7 @@ class RowBelonginCard extends StatelessWidget {
                           alignment: Alignment.topRight,
                           padding: EdgeInsets.symmetric(
                             horizontal: 10,
-                            vertical: 2,
+                            vertical: 1,
                           ),
                           decoration: BoxDecoration(
                             //color based on status

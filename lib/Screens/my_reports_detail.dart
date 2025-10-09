@@ -35,7 +35,7 @@ class _MyReportsDetailState extends State<MyReportsDetail>
           icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Color(0xFF274C77),
-            size: 20,
+            // size: 20,
           ),
           onPressed: () {
             Navigator.pop(context);

@@ -170,7 +170,7 @@ class _HomescreenState extends State<Homescreen> {
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
-          childAspectRatio: (220 / 160),
+          childAspectRatio: (220 / 170),
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
         ),

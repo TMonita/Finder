@@ -76,7 +76,7 @@ class _BelongingCardState extends State<BelongingCard> {
                   children: [
                     Text(
                       widget.belonging.category,
-                      style: AppTextStyle.bodyMedium.copyWith(
+                      style: AppTextStyle.body2ndLarge.copyWith(
                         color: Color(0xFF6096BA),
                       ),
                     ),
@@ -85,7 +85,7 @@ class _BelongingCardState extends State<BelongingCard> {
                 ),
                 Text(
                   widget.belonging.description,
-                  style: AppTextStyle.bodyMedium,
+                  style: AppTextStyle.bodyLarge,
                 ),
 
                 Opacity(

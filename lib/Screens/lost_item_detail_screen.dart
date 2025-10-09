@@ -139,7 +139,7 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // keeps buttons compact
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
             width: double.infinity,
@@ -161,21 +161,7 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
             width: double.infinity,
             height: 55,
             child: ElevatedButton.icon(
-              // onPressed: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ChatScreen()),
-              //   );
-              // },
               onPressed: () {
-                //   Navigator.pop(context);
-                //   Get.find<NavigationController>().changeIndex(3);
-
-                // Direct Navigate to chat page //
-                // Get.find<NavigationController>().changeIndex(3);
-                // Navigator.pop(context);
-
-                // Pop up Notification //
                 showDialog(
                   context: context,
                   builder: (context) => ConfirmMessageDialog(),
@@ -196,27 +182,6 @@ class _LostItemDetailpageState extends State<LostItemDetailpage> {
               ),
             ),
           ),
-          // SizedBox(height: 10),
-          // SizedBox(
-          //   width: double.infinity,
-          //   height: 55,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {
-          //       showDialog(
-          //         context: context,
-          //         builder: (context) => ConfirmMessageDialog(),
-          //       );
-          //     },
-          //     // icon: Icon(Icons.call, size: 30, color: Color(0xFF274C77)),
-          //     label: Text(
-          //       'Test',
-          //       style: TextStyle(color: Color(0xFF274C77), fontSize: 20),
-          //     ),
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: Color(0xFFE7ECEF),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

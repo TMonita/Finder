@@ -42,14 +42,21 @@ class AppTextStyle {
     fontWeight: FontWeight.bold,
   );
 
-  static TextStyle body2ndMedium = GoogleFonts.redHatDisplay(
-    fontSize: 10,
-    fontWeight: FontWeight.bold,
+  static TextStyle body3rdLarge = GoogleFonts.redHatDisplay(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
   );
+
   static TextStyle bodyMedium = GoogleFonts.redHatDisplay(
     fontSize: 11,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle body2ndMedium = GoogleFonts.redHatDisplay(
+    fontSize: 10,
+    fontWeight: FontWeight.bold,
+  );
+
   static TextStyle bodySmall = GoogleFonts.redHatDisplay(
     fontSize: 10,
     fontWeight: FontWeight.w400,

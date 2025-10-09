@@ -73,8 +73,8 @@ class AllReportBelonginCard extends StatelessWidget {
                               child: Container(
                                 alignment: Alignment.topRight,
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 2,
+                                  horizontal: 8,
+                                  vertical: 1,
                                 ),
                                 decoration: BoxDecoration(
                                   color: _getStatusColor(belonging.status),

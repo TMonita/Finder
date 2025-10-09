@@ -30,7 +30,7 @@ class _PostItemScreenState extends State<PostItemScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           children: [
             buildAppBar(),
             const SizedBox(height: 20),

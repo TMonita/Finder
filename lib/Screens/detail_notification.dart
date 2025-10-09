@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Screens/found_item_detail_screen.dart';
+import 'package:flutter_application_1/utils/app_colortheme.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/confirm_message_dialog.dart';
 
@@ -59,44 +59,42 @@ class _DetailNotificationState extends State<DetailNotification> {
               Row(
                 children: [
                   SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('images/violet.jpg'),
+                  ),
+                  SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      "Someone wants to chat with you to reunite their lost belongings!",
-                      style: AppTextStyle.h4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Visot Sela",
+                              style: AppTextStyle.h3.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '02:10 PM',
+                              style: AppTextStyle.bodySmall.copyWith(),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "You received a request message from finder",
+                          style: AppTextStyle.bodyLarge.copyWith(
+                            // color: AppColors.secondary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(width: 10),
                 ],
-              ),
-              SizedBox(height: 5),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 45),
-              //   child: Row(
-              //     children: [
-              //       CircleAvatar(
-              //         radius: 20,
-              //         backgroundImage: AssetImage('images/violet.jpg'),
-              //       ),
-              //       SizedBox(width: 5),
-              //       Row(children: [Text("Tho Violet", style: AppTextStyle.h2)]),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ItemDetailpage()),
-                  );
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset('images/charger.png', height: 220),
-                ),
-              ),
-              Text(
-                'I found this charger at school campus...',
-                style: AppTextStyle.bodyLarge,
               ),
               SizedBox(height: 5),
               Row(
@@ -165,36 +163,47 @@ class _DetailNotificationState extends State<DetailNotification> {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image.asset('images/electronic.png', height: 30),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('images/violet.jpg'),
+                  ),
+                  const SizedBox(width: 10),
                   Expanded(
-                    child: Text(
-                      "You received a message from a finder.",
-                      style: AppTextStyle.h4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Visot Sela",
+                              style: AppTextStyle.h3.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '02:10 PM',
+                              style: AppTextStyle.bodySmall.copyWith(),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "Someone wants to chat with you to reunite their lost belongings",
+                          style: AppTextStyle.bodyLarge.copyWith(
+                            // color: AppColors.secondary,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ],
                     ),
                   ),
+                  const SizedBox(width: 10),
                 ],
               ),
-              SizedBox(height: 5),
-
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ItemDetailpage()),
-                  );
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset('images/charger.png', height: 220),
-                ),
-              ),
-              Text(
-                'I found this charger at school campus...',
-                style: AppTextStyle.bodyLarge,
-              ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -216,7 +225,7 @@ class _DetailNotificationState extends State<DetailNotification> {
                     onPressed: () {},
                     child: const Text("Cancel"),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF274C77),

@@ -73,13 +73,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         style: AppTextStyle.h3,
                       ),
                       Spacer(),
-                      Text('10:20PM'),
+                      Text('10:20PM', style: AppTextStyle.bodySmall),
                     ],
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Hi, I found a phone on the bus stop bench at...',
-                    style: TextStyle(fontSize: 12),
+                    style: AppTextStyle.body3rdLarge,
                   ),
                 ],
               ),
@@ -107,14 +107,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Text('Tep Veha', style: AppTextStyle.h3),
                     Spacer(),
-                    Text('10:20PM'),
+                    Text('10:20PM', style: AppTextStyle.bodySmall),
                   ],
                 ),
                 SizedBox(height: 10),
 
                 Text(
                   'Hey, I came across a watch in the paking lot...',
-                  style: TextStyle(fontSize: 12),
+                  style: AppTextStyle.body3rdLarge,
                 ),
               ],
             ),
@@ -141,14 +141,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     Text('Vesot Sela', style: AppTextStyle.h3),
                     Spacer(),
-                    Text('13:30PM'),
+                    Text('13:30PM', style: AppTextStyle.bodySmall),
                   ],
                 ),
                 SizedBox(height: 10),
 
                 Text(
                   'Hey Vy, I saw your post about a phone found...',
-                  style: TextStyle(fontSize: 12),
+                  style: AppTextStyle.body3rdLarge,
                 ),
               ],
             ),
