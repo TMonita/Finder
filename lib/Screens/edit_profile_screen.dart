@@ -106,16 +106,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              // ScaffoldMessenger.of(
-              //   context,
-              // ).showSnackBar(const SnackBar(content: Text("Profile Saved")));
-              //   final String? imagePath = _selectedImage?.path;
-              //   Navigator.pop(context, imagePath);
-              //   ScaffoldMessenger.of(
-              //     context,
-              //   ).showSnackBar(const SnackBar(content: Text("Profile Saved")));
-
-              //save edited image in profile page
               Navigator.pop(context, {
                 'imagePath': _selectedImage?.path,
                 'username': _usernameController.text,
