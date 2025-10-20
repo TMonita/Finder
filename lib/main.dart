@@ -1,22 +1,45 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/main_screen.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'package:flutter_application_1/login_signup_page.dart/update_sign_in.dart';
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+void main() async {
+  // runApp(const MainApp());
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'access_token');
+  final initRoute = token != null ? '/mainscreen' : '/login';
+  runApp(
+    GetMaterialApp(
+      initialRoute: initRoute,
+      getPages: [
+        GetPage(name: '/login', page: () => SignInScreen()),
+        GetPage(name: '/mainscreen', page: () => MainScreen()),
+      ],
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
         appBarTheme: AppBarTheme(backgroundColor: Color(0xFFF5F5F5)),
       ),
-      home: MainScreen(),
-    );
-  }
+    ),
+  );
 }
+
+// class MainApp extends StatelessWidget {
+//   const MainApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         scaffoldBackgroundColor: Color(0xFFF5F5F5),
+//         appBarTheme: AppBarTheme(backgroundColor: Color(0xFFF5F5F5)),
+//       ),
+//       home: SignInScreen(),
+//     );
+//   }
+// }

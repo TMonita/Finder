@@ -140,7 +140,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     children: [
                       SizedBox(
                         height: 60,
-                        child: Image.asset('images/Medallions.png'),
+                        child: Image.asset('images/community_helper.png'),
                       ),
                     ],
                   ),
@@ -161,7 +161,7 @@ class _ProfilScreenState extends State<ProfilScreen> {
                     children: [
                       SizedBox(
                         height: 60,
-                        child: Image.asset('images/Medallions.png'),
+                        child: Image.asset('images/reunion_hero.png'),
                       ),
                     ],
                   ),
