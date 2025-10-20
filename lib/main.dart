@@ -20,6 +20,7 @@ void main() async {
         GetPage(name: '/login', page: () => SignInScreen()),
         GetPage(name: '/mainscreen', page: () => MainScreen()),
       ],
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
         appBarTheme: AppBarTheme(backgroundColor: Color(0xFFF5F5F5)),

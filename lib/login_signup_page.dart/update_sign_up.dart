@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/main_screen.dart';
-import 'package:flutter_application_1/login_signup_page.dart/update_sign_in.dart';
-import 'package:flutter_application_1/utils/app_colortheme.dart';
-import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
