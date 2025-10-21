@@ -7,13 +7,22 @@ import 'package:flutter_application_1/login_signup_page.dart/update_sign_up.dart
 import 'package:flutter_application_1/utils/app_colortheme.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final controller = Get.put(LoginController());
 
+  bool _isPasswordVisible = false;
+
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
 
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
@@ -64,7 +73,27 @@ class SignInScreen extends StatelessWidget {
                       validator:
                           (value) =>
                               value!.isEmpty ? 'Email is required' : null,
-                      decoration: _inputDecoration('Email'),
+                      // decoration: _inputDecoration('Email'),
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: AppTextStyle.hintText.copyWith(
+                          color: Colors.black,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 20),
 
@@ -73,8 +102,40 @@ class SignInScreen extends StatelessWidget {
                       validator:
                           (value) =>
                               value!.isEmpty ? 'Password is required' : null,
-                      obscureText: true,
-                      decoration: _inputDecoration('Password'),
+                      obscureText: !_isPasswordVisible,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: AppTextStyle.hintText.copyWith(
+                          color: Colors.black,
+                        ),
+                        //  labelStyle: AppTextStyle.hintText,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
 
@@ -163,16 +224,6 @@ class SignInScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  InputDecoration _inputDecoration(String label) {
-    return InputDecoration(
-      labelText: label,
-      labelStyle: AppTextStyle.hintText.copyWith(color: Colors.black),
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-      filled: true,
-      fillColor: Colors.white,
     );
   }
 

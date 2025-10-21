@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/main_screen.dart';
+import 'package:flutter_application_1/controllers/post_controller.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostItemScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class PostItemScreen extends StatefulWidget {
 }
 
 class _PostItemScreenState extends State<PostItemScreen> {
+  final PostController postController = Get.put(PostController());
   String belongingType = "Lost";
   File? _image;
   final ImagePicker _picker = ImagePicker();
@@ -236,11 +239,33 @@ class _PostItemScreenState extends State<PostItemScreen> {
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
+        // onPressed: () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => const MainScreen()),
+        //   );
+        // },
+
+        //updates
+        onPressed: () async {
+          await postController.createReport(
+            type: belongingType,
+            title: "I found kernh leo",
+            timeLostAt: "2025-10-15T17:45:00.000",
+            description:
+                "I found a black leather wallet near AEON Mall Phnom Penh parking lot. It contains some cash and cards. Please describe the contents to claim it.",
+            location: "Phnom Penh, Cambodia",
+            imageUrl:
+                'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thecatvet.ae%2F&psig=AOvVaw0CxpggihubPqKvxn4RhdRu&ust=1761092817130000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJiGlZGEtJADFQAAAAAdAAAAABAE',
+            userId: 7,
+            categoryId: 3,
           );
+          if (postController.isSuccess.value) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MainScreen()),
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF274C77),
@@ -259,146 +284,4 @@ class _PostItemScreenState extends State<PostItemScreen> {
       ),
     );
   }
-
-  // Widget postDetails() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Text(
-  //         "Lost/Found belonging",
-  //         style: AppTextStyle.h2,
-  //         // style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-  //       ),
-  //       const SizedBox(height: 8),
-
-  //       Row(
-  //         children: [
-  //           ElevatedButton(
-  //             style: ElevatedButton.styleFrom(
-  //               backgroundColor:
-  //                   belongingType == "Lost"
-  //                       ? const Color(0xFF274C77)
-  //                       : Colors.white, // Selected: blue, Unselected: white
-  //               foregroundColor:
-  //                   belongingType == "Lost"
-  //                       ? Colors.white
-  //                       : Colors
-  //                           .black, // Selected: white text, Unselected: black text
-  //               side: const BorderSide(color: Color(0xFF274C77), width: 2),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               padding: const EdgeInsets.symmetric(
-  //                 horizontal: 20,
-  //                 vertical: 8,
-  //               ),
-  //             ),
-  //             onPressed: () {
-  //               setState(() {
-  //                 belongingType = "Lost";
-  //               });
-  //             },
-  //             child: const Text("Lost"),
-  //           ),
-  //           const SizedBox(width: 20),
-  //           ElevatedButton(
-  //             style: ElevatedButton.styleFrom(
-  //               backgroundColor:
-  //                   belongingType == "Found"
-  //                       ? const Color(0xFF274C77)
-  //                       : Colors.white,
-  //               foregroundColor:
-  //                   belongingType == "Found" ? Colors.white : Colors.black,
-  //               side: const BorderSide(color: Color(0xFF274C77), width: 2),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(10),
-  //               ),
-  //               padding: const EdgeInsets.symmetric(
-  //                 horizontal: 20,
-  //                 vertical: 8,
-  //               ),
-  //             ),
-  //             onPressed: () {
-  //               setState(() {
-  //                 belongingType = "Found";
-  //               });
-  //             },
-  //             child: const Text("Found"),
-  //           ),
-  //         ],
-  //       ),
-  //       const SizedBox(height: 16),
-
-  //       buildTextField("Add items description.."),
-  //       buildTextField("Add items category"),
-  //       buildTextField("Enter location"),
-  //       buildTextField("Found date & Time"),
-  //       buildTextField("Contact Information"),
-
-  //       const SizedBox(height: 20),
-
-  //       GestureDetector(
-  //         onTap: _pickImage,
-  //         child: Container(
-  //           height: 200,
-  //           decoration: BoxDecoration(
-  //             border: Border.all(color: Colors.grey, style: BorderStyle.solid),
-  //             borderRadius: BorderRadius.circular(12),
-  //           ),
-  //           child:
-  //               _image == null
-  //                   ? const Center(
-  //                     child: Icon(
-  //                       Icons.image_outlined,
-  //                       size: 50,
-  //                       color: Colors.grey,
-  //                     ),
-  //                   )
-  //                   : ClipRRect(
-  //                     borderRadius: BorderRadius.circular(12),
-  //                     child: Image.file(_image!, fit: BoxFit.cover),
-  //                   ),
-  //         ),
-  //       ),
-
-  //       //btn submit
-  //       Padding(
-  //         padding: const EdgeInsets.only(top: 20),
-  //         child: SizedBox(
-  //           width: double.infinity,
-  //           height: 55,
-  //           child: ElevatedButton(
-  //             onPressed: () {
-  //               Navigator.push(
-  //                 context,
-  //                 MaterialPageRoute(builder: (context) => MainScreen()),
-  //               );
-  //             },
-  //             style: ElevatedButton.styleFrom(
-  //               backgroundColor: Color(0xFF274C77),
-  //               padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-  //             ),
-  //             child: Text(
-  //               'Submit',
-  //               style: AppTextStyle.h2_2.copyWith(color: Colors.white),
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget buildTextField(String hint) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(bottom: 12),
-  //     child: TextField(
-  //       style: AppTextStyle.bodyLarge,
-  //       decoration: InputDecoration(
-  //         hintText: hint,
-  //         // border: const UnderlineInputBorder(),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

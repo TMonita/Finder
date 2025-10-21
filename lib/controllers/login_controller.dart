@@ -36,12 +36,11 @@ class LoginController extends GetxController {
         },
       );
 
-      print('Response: ${response.data}'); // 👀 Debug print
+      print('Response: ${response.data}');
 
       if (response.data['success'] == true) {
         final data = response.data['data'];
 
-        // ✅ Safely extract token only if it's a String
         final token =
             data is Map && data['token'] is String
                 ? data['token']
@@ -74,38 +73,6 @@ class LoginController extends GetxController {
   }
 
   // Login user
-  // Future<void> login({String? email, String? password}) async {
-  //   isLoading.value = true;
-  //   try {
-  //     print('email: $email , $password');
-  //     final response = await _dio.post(
-  //       '/api/v1/users/login', // change this path to your actual API endpoint
-  //       data: {
-  //         "email": emailController.text.trim(),
-  //         "password": passwordController.text.trim(),
-  //         "method": "email",
-  //       },
-  //     );
-
-  //     if (response.data['success'] == true) {
-  //       final token = response.data['data']['token'];
-  //       await _storage.write(key: 'access_token', value: token);
-  //       isLoggedIn.value = true;
-  //       Get.snackbar("✅ Success", "Login successful");
-  //       Get.offAllNamed('/main');
-  //     } else {
-  //       print(
-  //         Get.snackbar("Error", response.data['message'] ?? "Login failed"),
-  //       );
-  //     }
-  //   } on DioException catch (e) {
-  //     Get.snackbar("Error", e.response?.data['message'] ?? "Login failed");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  // Login user
   Future<void> login({String? email, String? password}) async {
     isLoading.value = true;
     try {
@@ -115,7 +82,7 @@ class LoginController extends GetxController {
         data: {"email": email, "password": password, "method": "email"},
       );
 
-      print('Response: ${response.data}'); // 👀 Debug print
+      print('Response: ${response.data}');
 
       if (response.data['success'] == true) {
         final data = response.data['data'];

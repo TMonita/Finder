@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DioService {
   static Dio? _dio;
-  static const String baseUrl = 'http://10.0.2.2:8000'; // Replace with your API
+  static const String baseUrl = 'http://10.0.2.2:8000'; 
   static final FlutterSecureStorage storage = FlutterSecureStorage();
 
   // Singleton Dio instance
@@ -46,7 +46,7 @@ class DioService {
     return _dio!;
   }
 
-  // Example GET request
+  //  GET request
   static Future<Response> get(
     String path, {
     Map<String, dynamic>? queryParams,
@@ -54,7 +54,7 @@ class DioService {
     return await getInstance().get(path, queryParameters: queryParams);
   }
 
-  // Example POST request
+  //  POST request
   static Future<Response> post(String path, {dynamic data}) async {
     return await getInstance().post(path, data: data);
   }

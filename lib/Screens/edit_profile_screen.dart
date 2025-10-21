@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login_signup_page.dart/signup_page.dart';
-import 'package:flutter_application_1/login_signup_page.dart/update_sign_up.dart';
+import 'package:flutter_application_1/login_signup_page.dart/update_sign_in.dart';
 import 'package:flutter_application_1/utils/app_colortheme.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,7 +16,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _usernameController = TextEditingController(text: "Tho Violet");
   final _emailController = TextEditingController(text: "violet23!@gmail.com");
   final _phoneController = TextEditingController(text: "+85577919843");
-  // final _oldPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _addressController = TextEditingController(text: "Sen Sok, Phnom Penh");
 
@@ -189,7 +187,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    MaterialPageRoute(builder: (context) => SignInScreen()),
                   );
                 },
                 child: Text('LogOut'),
