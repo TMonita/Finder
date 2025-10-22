@@ -113,6 +113,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/allitems_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BelongingCard extends StatefulWidget {
   // final AllItemsModel belonging;
@@ -142,10 +143,19 @@ class _BelongingCardState extends State<BelongingCard> {
   @override
   Widget build(BuildContext context) {
     final item = widget.belonging;
+    String formattedTime = '';
+    if (item.timeLostAt != null && item.timeLostAt!.isNotEmpty) {
+      try {
+        final dateTime = DateTime.parse(item.timeLostAt!);
+        formattedTime = timeago.format(dateTime);
+      } catch (e) {
+        formattedTime = item.timeLostAt!;
+      }
+    }
 
     print(
-      'Category: ${item.categoryId}, Description: ${item.description}, '
-      'Location: ${item.location}, Time: ${item.timeLostAt}, Status: ${item.type}',
+      'Category: ${item.categoryName}, Description: ${item.description}, '
+      'Location: ${item.location}, Time: ${item.timeLostAt}, Status: ${item.status}',
     );
 
     return Container(
@@ -176,8 +186,33 @@ class _BelongingCardState extends State<BelongingCard> {
                           height: 220,
                           width: double.infinity,
                         ),
+                // item.imageUrl != null && item.imageUrl!.isNotEmpty
+                //     ? Image.network(
+                //       item.imageUrl!,
+                //       fit: BoxFit.cover,
+                //       height: 220,
+                //       width: double.infinity,
+                //       loadingBuilder: (context, child, loadingProgress) {
+                //         if (loadingProgress == null) return child;
+                //         return const Center(
+                //           child: CircularProgressIndicator(strokeWidth: 2),
+                //         );
+                //       },
+                //       errorBuilder:
+                //           (context, error, stackTrace) => const Icon(
+                //             Icons.broken_image,
+                //             size: 80,
+                //             color: Colors.grey,
+                //           ),
+                //     )
+                //     : Image.asset(
+                //       'images/charger.png',
+                //       fit: BoxFit.cover,
+                //       height: 220,
+                //       width: double.infinity,
+                //     ),
               ),
-              if (item.type != null)
+              if (item.status != null)
                 Positioned(
                   right: 8,
                   top: 8,
@@ -187,11 +222,11 @@ class _BelongingCardState extends State<BelongingCard> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: _getStatusColor(item.type!),
+                      color: _getStatusColor(item.status!),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      item.type!,
+                      item.status!,
                       style: AppTextStyle.bodyMedium.copyWith(
                         color: Colors.white,
                       ),
@@ -212,7 +247,8 @@ class _BelongingCardState extends State<BelongingCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        'Category ${item.categoryId ?? '-'}',
+                        // 'Category ${item.categoryId ?? '-'}',
+                        item.categoryName ?? 'Unknown Category',
                         style: AppTextStyle.body2ndLarge.copyWith(
                           color: const Color(0xFF6096BA),
                         ),
@@ -222,7 +258,8 @@ class _BelongingCardState extends State<BelongingCard> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      item.timeLostAt ?? '',
+                      // item.timeLostAt ?? '',
+                      formattedTime,
                       style: AppTextStyle.bodyLight,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,

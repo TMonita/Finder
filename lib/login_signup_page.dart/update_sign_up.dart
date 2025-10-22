@@ -240,7 +240,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               : ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    controller.login(
+                                    controller.register(
+                                      username: usernameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
                                     );

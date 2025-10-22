@@ -1,4 +1,6 @@
 import 'package:flutter_application_1/Screens/main_screen.dart';
+import 'package:flutter_application_1/controllers/product_controller.dart';
+import 'package:flutter_application_1/controllers/user_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,8 @@ void main() async {
 
   final storage = FlutterSecureStorage();
   final token = await storage.read(key: 'access_token');
+  Get.put(ProductController(), permanent: true);
+  Get.put(UserController(), permanent: true);
   final initRoute = token != null ? '/mainscreen' : '/login';
   runApp(
     GetMaterialApp(

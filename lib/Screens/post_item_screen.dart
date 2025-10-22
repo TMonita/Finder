@@ -4,6 +4,7 @@ import 'package:flutter_application_1/Screens/main_screen.dart';
 import 'package:flutter_application_1/controllers/post_controller.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostItemScreen extends StatefulWidget {
@@ -40,7 +41,6 @@ class _PostItemScreenState extends State<PostItemScreen> {
             buildCategoryDropdown(),
             const SizedBox(height: 20),
             buildPostTypeSelector(),
-            // postDetails(),
             const SizedBox(height: 20),
             buildTextField(
               "Description",
@@ -48,6 +48,7 @@ class _PostItemScreenState extends State<PostItemScreen> {
               maxLines: 3,
             ),
             buildTextField("Location", "Where the item was found"),
+            buildPhonenumberField("Phone Number", "Enter Your Phone Number"),
             const SizedBox(height: 20),
             buildImagePicker(),
             const SizedBox(height: 30),
@@ -161,6 +162,48 @@ class _PostItemScreenState extends State<PostItemScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildPhonenumberField(String label, String hint, {int maxLines = 1}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: AppTextStyle.h2),
+          const SizedBox(height: 8),
+          TextField(
+            maxLines: maxLines,
+            keyboardType: TextInputType.number, // numeric keyboard
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly, // allow only numbers
+            ],
+            decoration: InputDecoration(
+              hintText: hint,
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 14,
+              ),
+              hintStyle: AppTextStyle.bodyLarge,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.white),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.white),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

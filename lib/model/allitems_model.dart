@@ -6,7 +6,9 @@ class AllItemsModel {
   String? location;
   String? imageUrl;
   int? userId;
+  String? status;
   int? categoryId;
+  String? categoryName;
 
   AllItemsModel({
     this.type,
@@ -16,7 +18,9 @@ class AllItemsModel {
     this.location,
     this.imageUrl,
     this.userId,
+    this.status,
     this.categoryId,
+    this.categoryName,
   });
 
   AllItemsModel.fromJson(Map<String, dynamic> json) {
@@ -27,7 +31,31 @@ class AllItemsModel {
     location = json['location'];
     imageUrl = json['imageUrl'];
     userId = json['userId'];
+    // status = json['status'];'
+    status = _mapStatus(json['status']);
     categoryId = json['categoryId'];
+    categoryName = json['category']?['name'];
+    if (json['images'] != null &&
+        json['images'] is List &&
+        json['images'].isNotEmpty) {
+      imageUrl = json['images'][0]['url'];
+    } else {
+      imageUrl = null;
+    }
+  }
+
+  String _mapStatus(String? backendStatus) {
+    if (backendStatus == null) return 'Unknown';
+    switch (backendStatus.toUpperCase().trim()) {
+      case 'PENDING':
+        return 'Pending';
+      case 'CHATOWNER':
+        return 'In Progress';
+      case 'COMPLETED':
+        return 'Founded';
+      default:
+        return backendStatus;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -39,7 +67,13 @@ class AllItemsModel {
     data['location'] = this.location;
     data['imageUrl'] = this.imageUrl;
     data['userId'] = this.userId;
+    data['status'] = this.status;
     data['categoryId'] = this.categoryId;
+    data['categoryName'] = this.categoryName;
+
+    if (categoryName != null) {
+      data['category'] = {'name': categoryName};
+    }
     return data;
   }
 }

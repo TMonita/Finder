@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controllers/navigation_controller.dart';
+import 'package:flutter_application_1/controllers/product_controller.dart';
+import 'package:flutter_application_1/controllers/user_controller.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/confirm_message_dialog.dart';
 import 'package:get/instance_manager.dart';
+import 'package:flutter_application_1/model/allitems_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ItemDetailpage extends StatefulWidget {
-  const ItemDetailpage({super.key});
+  // final String itemType;
+  final AllItemsModel item;
+
+  const ItemDetailpage({super.key, required this.item});
 
   @override
   State<ItemDetailpage> createState() => _ItemDetailpageState();
 }
 
 class _ItemDetailpageState extends State<ItemDetailpage> {
+  final userController = Get.find<UserController>();
+  final productController = Get.find<ProductController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,38 +29,150 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
     );
   }
 
+  // Widget buildAppbar() {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //         icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF274C77)),
+  //         onPressed: () {
+  //           Navigator.pop(context);
+  //         },
+  //       ),
+  //       Expanded(
+  //         child: Center(
+  //           child: Text(
+  //             'Found Item',
+  //             style: AppTextStyle.h1.copyWith(color: Color(0xFF274C77)),
+  //           ),
+  //         ),
+  //       ),
+
+  //       IconButton(
+  //         onPressed: () {},
+  //         icon: Icon(Icons.share, color: Color(0xFF274C77)),
+  //       ),
+  //     ],
+  //   );
+  // }
+
   Widget buildAppbar() {
+    String
+    title =
+        // widget.itemType == "FOUND" ? "Found Item Details" : "Lost Item Details";
+        widget.item.type == "FOUND"
+            ? "Found Item Details"
+            : "Lost Item Details";
+
     return Row(
       children: [
         IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF274C77)),
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => MainScreen()),
-            // );
             Navigator.pop(context);
           },
         ),
         Expanded(
           child: Center(
             child: Text(
-              'Found Item',
-              // style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              style: AppTextStyle.h1.copyWith(color: Color(0xFF274C77)),
+              title,
+              style: AppTextStyle.h1.copyWith(color: const Color(0xFF274C77)),
             ),
           ),
         ),
-
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.share, color: Color(0xFF274C77)),
+          icon: const Icon(Icons.share, color: Color(0xFF274C77)),
         ),
       ],
     );
   }
 
+  // Widget buildDetail() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(8.0),
+  //     width: double.infinity,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         ClipRRect(
+  //           borderRadius: BorderRadius.circular(10.0),
+  //           child: Image.asset(
+  //             'images/charger.png',
+  //             fit: BoxFit.cover,
+  //             height: 320,
+  //             width: double.infinity,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 10),
+  //         Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 "Electronic",
+  //                 style: AppTextStyle.body2ndLarge.copyWith(
+  //                   color: Color(0xFF6096BA),
+  //                 ),
+  //               ),
+  //               SizedBox(height: 10),
+  //               Text(
+  //                 "I found this charger at school campus and now it still here with me",
+  //                 style: AppTextStyle.bodyLarge,
+  //               ),
+  //               const SizedBox(height: 10),
+  //               Row(
+  //                 children: [
+  //                   Opacity(
+  //                     opacity: 0.8,
+  //                     child: Icon(Icons.watch_later_outlined, size: 12),
+  //                   ),
+  //                   SizedBox(width: 4),
+  //                   Text('2 hours ago', style: AppTextStyle.bodySmall),
+  //                 ],
+  //               ),
+  //               const SizedBox(height: 10),
+  //               Row(
+  //                 children: [
+  //                   Opacity(
+  //                     opacity: 0.8,
+  //                     child: Icon(Icons.pin_drop_outlined, size: 12),
+  //                   ),
+  //                   SizedBox(width: 4),
+  //                   Text(
+  //                     'Limkokwing University',
+  //                     style: AppTextStyle.bodySmall,
+  //                   ),
+  //                 ],
+  //               ),
+  //               SizedBox(height: 20),
+  //               TextButton(
+  //                 onPressed: () {
+  //                   // Navigator.push(
+  //                   //   context,
+  //                   //   MaterialPageRoute(builder: (context) => ProfilScreen()),
+  //                   // );
+  //                   // Get.find<NavigationController>().currentIndex.value = 4;
+  //                   Get.find<NavigationController>().changeIndex(4);
+  //                   Navigator.pop(context);
+  //                 },
+
+  //                 child: Text(
+  //                   'Add post by Tho Violet',
+  //                   style: AppTextStyle.bodyLarge.copyWith(color: Colors.black),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   Widget buildDetail() {
+    final item = widget.item;
+
     return Container(
       padding: const EdgeInsets.all(8.0),
       width: double.infinity,
@@ -60,12 +181,20 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.asset(
-              'images/charger.png',
-              fit: BoxFit.cover,
-              height: 320,
-              width: double.infinity,
-            ),
+            child:
+                item.imageUrl != null && item.imageUrl!.isNotEmpty
+                    ? Image.network(
+                      item.imageUrl!,
+                      fit: BoxFit.cover,
+                      height: 320,
+                      width: double.infinity,
+                    )
+                    : Image.asset(
+                      'images/charger.png',
+                      fit: BoxFit.cover,
+                      height: 320,
+                      width: double.infinity,
+                    ),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -74,55 +203,56 @@ class _ItemDetailpageState extends State<ItemDetailpage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Electronic",
+                  item.categoryName ?? 'Unknown Category',
                   style: AppTextStyle.body2ndLarge.copyWith(
-                    color: Color(0xFF6096BA),
+                    color: const Color(0xFF6096BA),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  "I found this charger at school campus and now it still here with me",
+                  item.description ?? 'No description provided',
                   style: AppTextStyle.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Opacity(
+                    const Opacity(
                       opacity: 0.8,
                       child: Icon(Icons.watch_later_outlined, size: 12),
                     ),
-                    SizedBox(width: 4),
-                    Text('2 hours ago', style: AppTextStyle.bodySmall),
+                    const SizedBox(width: 4),
+                    // Text(item.timeLostAt ?? '',
+                    Text(
+                      item.timeLostAt != null && item.timeLostAt!.isNotEmpty
+                          ? timeago.format(DateTime.parse(item.timeLostAt!))
+                          : '',
+                      style: AppTextStyle.bodySmall,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Opacity(
+                    const Opacity(
                       opacity: 0.8,
                       child: Icon(Icons.pin_drop_outlined, size: 12),
                     ),
-                    SizedBox(width: 4),
+                    const SizedBox(width: 4),
                     Text(
-                      'Limkokwing University',
+                      item.location ?? 'Unknown location',
                       style: AppTextStyle.bodySmall,
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ProfilScreen()),
-                    // );
-                    // Get.find<NavigationController>().currentIndex.value = 4;
                     Get.find<NavigationController>().changeIndex(4);
                     Navigator.pop(context);
                   },
-
                   child: Text(
-                    'Add post by Tho Violet',
+                    // 'Add post by ${item.userId ?? "Unknown"}',
+                    'Add post by ${Get.find<UserController>().getUserName(item.userId)}',
                     style: AppTextStyle.bodyLarge.copyWith(color: Colors.black),
                   ),
                 ),

@@ -53,7 +53,6 @@ class _ProfilScreenState extends State<ProfilScreen> {
             ),
             SizedBox(width: 20),
             Column(
-              // mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(

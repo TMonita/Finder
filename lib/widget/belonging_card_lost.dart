@@ -1,26 +1,141 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter_application_1/model/belonging_model.dart';
+// import 'package:flutter_application_1/utils/app_textstyle.dart';
+
+// class BelongingCardLostPage extends StatefulWidget {
+//   final BelongingModel belonging;
+//   const BelongingCardLostPage({super.key, required this.belonging});
+
+//   @override
+//   State<BelongingCardLostPage> createState() => _BelongingCardState();
+// }
+
+// class _BelongingCardState extends State<BelongingCardLostPage> {
+//   Color _getStatusColor(String status) {
+//     switch (status.toLowerCase().trim()) {
+//       case 'pending':
+//         return Color(0xFF274C77).withOpacity(0.8);
+//       case 'in progress':
+//         return Color(0xFF6096BA).withOpacity(0.8);
+//       case 'founded':
+//       case 'discovered':
+//       case 'found':
+//         return Color(0xFFA3CEF1).withOpacity(0.8);
+//       default:
+//         return Colors.black26;
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print(
+//       'Category: ${widget.belonging.category}, Description: ${widget.belonging.description}, Location: ${widget.belonging.location}, Time: ${widget.belonging.time}, Status: ${widget.belonging.status}',
+//     );
+//     return Container(
+//       width: MediaQuery.of(context).size.width / 2,
+//       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+//       child: Column(
+//         children: [
+//           Stack(
+//             children: [
+//               ClipRRect(
+//                 borderRadius: BorderRadiusDirectional.circular(10.0),
+//                 child: Image.asset(
+//                   widget.belonging.image,
+//                   fit: BoxFit.cover,
+//                   height: 220,
+//                   width: double.infinity,
+//                 ),
+//               ),
+//               Positioned(
+//                 right: 8,
+//                 top: 8,
+//                 child: Container(
+//                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//                   decoration: BoxDecoration(
+//                     color: _getStatusColor(widget.belonging.status),
+//                     borderRadius: BorderRadius.circular(10),
+//                   ),
+//                   child: Text(
+//                     widget.belonging.status,
+//                     style: AppTextStyle.bodyMedium.copyWith(
+//                       color: Colors.white,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           SizedBox(height: 5),
+//           Padding(
+//             padding: const EdgeInsets.all(4.0),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Text(
+//                       widget.belonging.category,
+//                       style: AppTextStyle.bodyMedium.copyWith(
+//                         color: Color(0xFF6096BA),
+//                       ),
+//                     ),
+//                     Text(widget.belonging.time, style: AppTextStyle.bodyLight),
+//                   ],
+//                 ),
+
+//                 Text(
+//                   widget.belonging.description,
+//                   style: AppTextStyle.bodyLarge,
+//                 ),
+
+//                 Opacity(
+//                   opacity: 0.8,
+//                   child: Row(
+//                     children: [
+//                       Icon(Icons.pin_drop_outlined, size: 12),
+//                       Text(
+//                         widget.belonging.location,
+//                         style: AppTextStyle.bodySmall,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+//new updates
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/belonging_model.dart';
+import 'package:flutter_application_1/model/allitems_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class BelongingCardLostPage extends StatefulWidget {
-  final BelongingModel belonging;
+  final AllItemsModel belonging;
   const BelongingCardLostPage({super.key, required this.belonging});
 
   @override
-  State<BelongingCardLostPage> createState() => _BelongingCardState();
+  State<BelongingCardLostPage> createState() => _BelongingCardLostPageState();
 }
 
-class _BelongingCardState extends State<BelongingCardLostPage> {
+class _BelongingCardLostPageState extends State<BelongingCardLostPage> {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase().trim()) {
       case 'pending':
-        return Color(0xFF274C77).withOpacity(0.8);
+        return const Color(0xFF274C77).withOpacity(0.8);
       case 'in progress':
-        return Color(0xFF6096BA).withOpacity(0.8);
+        return const Color(0xFF6096BA).withOpacity(0.8);
       case 'founded':
       case 'discovered':
       case 'found':
-        return Color(0xFFA3CEF1).withOpacity(0.8);
+        return const Color(0xFFA3CEF1).withOpacity(0.8);
       default:
         return Colors.black26;
     }
@@ -28,45 +143,76 @@ class _BelongingCardState extends State<BelongingCardLostPage> {
 
   @override
   Widget build(BuildContext context) {
+    final item = widget.belonging;
+    String formattedTime = '';
+    if (item.timeLostAt != null && item.timeLostAt!.isNotEmpty) {
+      try {
+        final dateTime = DateTime.parse(item.timeLostAt!);
+        formattedTime = timeago.format(dateTime);
+      } catch (e) {
+        formattedTime = item.timeLostAt!; // fallback if parsing fails
+      }
+    }
     print(
-      'Category: ${widget.belonging.category}, Description: ${widget.belonging.description}, Location: ${widget.belonging.location}, Time: ${widget.belonging.time}, Status: ${widget.belonging.status}',
+      'Category: ${item.categoryName}, Description: ${item.description}, '
+      'Location: ${item.location}, Time: ${item.timeLostAt}, Status: ${item.status}',
     );
+
     return Container(
       width: MediaQuery.of(context).size.width / 2,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: [
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadiusDirectional.circular(10.0),
-                child: Image.asset(
-                  widget.belonging.image,
-                  fit: BoxFit.cover,
-                  height: 220,
-                  width: double.infinity,
-                ),
+                borderRadius: BorderRadius.circular(10.0),
+                child:
+                    (item.imageUrl != null && item.imageUrl!.isNotEmpty)
+                        ? Image.network(
+                          item.imageUrl!,
+                          fit: BoxFit.cover,
+                          height: 220,
+                          width: double.infinity,
+                          errorBuilder:
+                              (context, error, stackTrace) => const Icon(
+                                Icons.image_not_supported,
+                                size: 80,
+                              ),
+                        )
+                        : Image.asset(
+                          'images/charger.png',
+                          fit: BoxFit.cover,
+                          height: 220,
+                          width: double.infinity,
+                        ),
               ),
-              Positioned(
-                right: 8,
-                top: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: _getStatusColor(widget.belonging.status),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    widget.belonging.status,
-                    style: AppTextStyle.bodyMedium.copyWith(
-                      color: Colors.white,
+              if (item.status != null)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _getStatusColor(item.status!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      item.status!,
+                      style: AppTextStyle.bodyMedium.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
-          SizedBox(height: 5),
+
+          // === Text Section ===
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Column(
@@ -75,29 +221,49 @@ class _BelongingCardState extends State<BelongingCardLostPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.belonging.category,
-                      style: AppTextStyle.bodyMedium.copyWith(
-                        color: Color(0xFF6096BA),
+                    Expanded(
+                      child: Text(
+                        // 'Category ${item.categoryId ?? '-'}',
+                        item.categoryName ?? 'Unknown Category',
+                        style: AppTextStyle.body2ndLarge.copyWith(
+                          color: const Color(0xFF6096BA),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
-                    Text(widget.belonging.time, style: AppTextStyle.bodyLight),
+                    const SizedBox(width: 8),
+                    Text(
+                      // item.timeLostAt ?? '',
+                      formattedTime,
+                      style: AppTextStyle.bodyLight,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ],
                 ),
-
+                const SizedBox(height: 4),
                 Text(
-                  widget.belonging.description,
-                  style: AppTextStyle.bodyLarge,
+                  item.description ?? '',
+                  style: AppTextStyle.bodyMedium,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-
+                const SizedBox(height: 2),
                 Opacity(
                   opacity: 0.8,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.pin_drop_outlined, size: 12),
-                      Text(
-                        widget.belonging.location,
-                        style: AppTextStyle.bodySmall,
+                      const Icon(Icons.pin_drop_outlined, size: 12),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          item.location ?? '',
+                          style: AppTextStyle.bodySmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
