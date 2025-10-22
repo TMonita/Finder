@@ -49,9 +49,19 @@ class LoginController extends GetxController {
                 : null;
 
         if (token != null) {
+          // await _storage.write(key: 'access_token', value: token);
+          // isLoggedIn.value = true;
+          // Get.snackbar("✅ Success", "Register successful");
+
+          //updated
           await _storage.write(key: 'access_token', value: token);
+
+          if (data['id'] != null) {
+            await _storage.write(key: 'user_id', value: data['id'].toString());
+          }
+
           isLoggedIn.value = true;
-          Get.snackbar("✅ Success", "Register successful");
+          Get.snackbar("✅ Success", "Login successful");
           Get.offAllNamed('/mainscreen');
         } else {
           Get.snackbar("Error", "Invalid token format from server");
@@ -96,9 +106,20 @@ class LoginController extends GetxController {
                 : null;
 
         if (token != null) {
+          // await _storage.write(key: 'access_token', value: token);
+          // isLoggedIn.value = true;
+          // Get.snackbar("✅ Success", "Login successful");
+
           await _storage.write(key: 'access_token', value: token);
+
+          // ✅ Save userId
+          if (data['id'] != null) {
+            await _storage.write(key: 'user_id', value: data['id'].toString());
+          }
+
           isLoggedIn.value = true;
           Get.snackbar("✅ Success", "Login successful");
+
           Get.offAllNamed('/mainscreen');
         } else {
           Get.snackbar("Error", "Invalid token format from server");
@@ -118,9 +139,43 @@ class LoginController extends GetxController {
   }
 
   // Logout user
+  // Future<void> logout() async {
+  //   await _storage.delete(key: 'access_token');
+  //   isLoggedIn.value = false;
+  //   Get.offAllNamed('/logout');
+  // }
+
   Future<void> logout() async {
-    await _storage.delete(key: 'access_token');
-    isLoggedIn.value = false;
-    Get.offAllNamed('/login');
+    isLoading.value = true;
+    try {
+      final token = await _storage.read(key: 'access_token');
+
+      // Optional: Notify backend (if supported)
+      if (token != null) {
+        try {
+          await _dio.post(
+            '/api/v1/users/logout',
+            options: Options(headers: {'Authorization': 'Bearer $token'}),
+          );
+        } catch (e) {
+          print('Logout API failed, proceeding to local cleanup...');
+        }
+      }
+
+      // Clear secure storage & local state
+      await _storage.delete(key: 'access_token');
+      emailController.clear();
+      passwordController.clear();
+      usernameController.clear();
+      isLoggedIn.value = false;
+
+      Get.snackbar("👋 Logged Out", "You have been logged out successfully");
+      Get.offAllNamed('/login'); // safer redirect
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong during logout");
+      print("Logout error: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

@@ -6,10 +6,11 @@ class FilterController extends GetxController {
   var filters = {}.obs;
   var isLoading = false.obs;
   var filteredItems = [].obs;
+  //store category id
 
   void selectCategory(String category) {
     if (selectedCategory.value == category) {
-      selectedCategory.value = ''; // deselect
+      selectedCategory.value = '';
     } else {
       selectedCategory.value = category;
     }

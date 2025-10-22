@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/detail_notification.dart';
 import 'package:flutter_application_1/Screens/found_item_detail_screen.dart';
 import 'package:flutter_application_1/controllers/filter_controller.dart';
-import 'package:flutter_application_1/controllers/product_controller.dart';
+import 'package:flutter_application_1/controllers/item_controller.dart';
 import 'package:flutter_application_1/model/belonging_model.dart';
 import 'package:flutter_application_1/utils/app_textstyle.dart';
 import 'package:flutter_application_1/widget/belonging_card.dart';
@@ -21,7 +21,7 @@ class _HomescreenState extends State<Homescreen> {
   bool showFound = true;
   String? selectedCategory;
   List<BelongingModel> filteredBelongingList = [];
-  final ProductController productController = Get.put(ProductController());
+  final ItemsController productController = Get.put(ItemsController());
   final FilterController filterController = Get.put(FilterController());
 
   @override
@@ -324,7 +324,11 @@ class _HomescreenState extends State<Homescreen> {
                   minimumSize: const Size(double.infinity, 50),
                 ),
                 onPressed: () {
-                  filterController.applyFilters();
+                  // filterController.applyFilters();
+                  productController.updateFilter(
+                    //add id
+                  );
+
                   Navigator.pop(context); // close bottom sheet
                 },
                 child: Text(

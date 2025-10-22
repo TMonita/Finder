@@ -186,31 +186,6 @@ class _BelongingCardState extends State<BelongingCard> {
                           height: 220,
                           width: double.infinity,
                         ),
-                // item.imageUrl != null && item.imageUrl!.isNotEmpty
-                //     ? Image.network(
-                //       item.imageUrl!,
-                //       fit: BoxFit.cover,
-                //       height: 220,
-                //       width: double.infinity,
-                //       loadingBuilder: (context, child, loadingProgress) {
-                //         if (loadingProgress == null) return child;
-                //         return const Center(
-                //           child: CircularProgressIndicator(strokeWidth: 2),
-                //         );
-                //       },
-                //       errorBuilder:
-                //           (context, error, stackTrace) => const Icon(
-                //             Icons.broken_image,
-                //             size: 80,
-                //             color: Colors.grey,
-                //           ),
-                //     )
-                //     : Image.asset(
-                //       'images/charger.png',
-                //       fit: BoxFit.cover,
-                //       height: 220,
-                //       width: double.infinity,
-                //     ),
               ),
               if (item.status != null)
                 Positioned(

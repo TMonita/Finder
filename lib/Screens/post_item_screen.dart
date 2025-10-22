@@ -15,7 +15,7 @@ class PostItemScreen extends StatefulWidget {
 
 class _PostItemScreenState extends State<PostItemScreen> {
   final PostController postController = Get.put(PostController());
-  String belongingType = "Lost";
+  String belongingType = "LOST";
   File? _image;
   final ImagePicker _picker = ImagePicker();
   String? selectedCategory;
@@ -133,9 +133,11 @@ class _PostItemScreenState extends State<PostItemScreen> {
 
   Widget buildPostTypeButton(String type, Color color) {
     final bool isSelected = belongingType == type;
+
     return Expanded(
       child: GestureDetector(
         onTap: () => setState(() => belongingType = type),
+
         child: Container(
           height: 45,
           alignment: Alignment.center,
